@@ -3,6 +3,8 @@
   <head>
     <title>Home Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="plotly.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
   <style>
   body {
     margin: 0;
@@ -44,7 +46,31 @@
           </div>
         <div style="padding-left:16px">
           <h2> Raspberry Pi IoT Network Defender</h2>
-          <p>insert data/stats regarding software </P
+          <p>Graphical representation test</p>
+    <div class="wrapper">
+        <div id="chart"></div>
+        <script>
+            function getData() {
+                return Math.random();
+            }  
+            Plotly.plot('chart',[{
+                y:[getData()],
+                type:'line'
+            }]);
+            
+            var cnt = 0;
+            setInterval(function(){
+                Plotly.extendTraces('chart',{ y:[[getData()]]}, [0]);
+                cnt++;
+                if(cnt > 500) {
+                    Plotly.relayout('chart',{
+                        xaxis: {
+                            range: [cnt-500,cnt]
+                        }
+                    });
+                }
+            },15);
+        </script>
     </div>
   </body>
 </html>
