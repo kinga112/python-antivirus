@@ -73,10 +73,10 @@ img {
   <body>
       <div class="container">
         <div class ="topnav">
-          <a href="home.html">Home</a>
-          <a class="active" href="conf.html">Config</a>
-          <a href="help.html">Help</a>
-          <a href="about.html">About</a>
+          <a href="home">Home</a>
+          <a class="active" href="conf">Config</a>
+          <a href="help">Help</a>
+          <a href="about">About</a>
         </div>
         <div class="sidenav">
             <div id="logo">
@@ -84,7 +84,6 @@ img {
             </div>
             <a href="a">Whitelist</a>
             <a href="a">Blocklist</a>
-     <! turn disable into dropdown menu >
             <a href="a">Disable</a>
             <a href="a">Settings</a>
         </div>
@@ -92,6 +91,13 @@ img {
         <div style="padding-left:16px">
           <h2>Make Your Device Configurations Here</h2>
           <p>Make Sure You Click Apply To Save Your Changes!</p>
+          <form action="/conf" method="POST" action="">
+            <label for="id">Device IP</label><br>
+            <input type="text" id="dev" name="dev"><br><br>
+            <label for="id">Source IP</label><br>
+            <input type="text" id="src" name="src"><br><br>
+            <input type="submit" value="Submit">
+        </form>
         </div>
         </div>
     </body>

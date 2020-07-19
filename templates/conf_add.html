@@ -5,11 +5,17 @@
     <form action="/conf" method="POST" action="">
         <label for="id">Device IP</label><br>
         <input type="text" id="dev" name="dev"><br><br>
-        <label for="id">Source IP</label><br>
-        <input type="text" id="src" name="src"><br><br>
-        <input type="submit" value="Submit">
+        <label for="id">Choose Device Type:</label><br>
+            <select name="devices" id="devices" multiple>
+                <option value="amazon">Amazon Smart Devices</option>
+                <option value="google">Google Smart Devices</option>
+                <option value="roku">Roku Home Devices</option>
+                <option value="smart1">smart device 1</option>
+            </select>
+        <br><br>
+        <input type="submit" value="Submit">  <! DROPDOWN MENU !>
     </form>
-  
+  <p>Hold down the CTRL (Windows) or Command (Mac) button to select multiple options.</p>
   </body>
   </head>
   </html>
