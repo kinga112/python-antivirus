@@ -73,14 +73,14 @@ img {
   <body>
       <div class="container">
         <div class ="topnav">
-          <a href="home.html">Home</a>
-          <a class="active" href="conf.html">Config</a>
-          <a href="help">Help</a>
-          <a href="about">About</a>
+          <a href="/">Home</a>
+          <a class="active" href="/conf">Config</a>
+          <a href="/help">Help</a>
+          <a href="/about">About</a>
         </div>
         <div class="sidenav">
             <div id="logo">
-                <img src="logo.png" alt="IoT Mask Logo - Earth Covered By Mask">
+                <img src="{{url_for('static', filename='logo.png')}}" alt="IoT Mask Logo - Earth Covered By Mask">
             </div>
             <a href="a">Whitelist</a>
             <a href="a">Blocklist</a>
