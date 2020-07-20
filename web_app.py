@@ -29,11 +29,7 @@ def conf():
     if request.method == 'Get':
         print("get")
 
-    try:
-        dev_ip_list, dev_list = get_sql()
-    except:
-        dev_ip_list = []
-        dev_list = []
+    dev_ip_list, dev_list = get_sql()
     
     return render_template('conf.html', len=len(dev_ip_list), dev_ip_list=dev_ip_list, dev_list=dev_list)
 
@@ -56,6 +52,9 @@ def get_sql():
     for row in data:
         dev_ip_list.append(row['device_ip'])
         dev_list.append(row['device'])
+
+    print("DEVICE IP LIST: ", dev_ip_list)
+    print("DEVICE LIST: ", dev_list)
     return dev_ip_list, dev_list
 
 if __name__ == '__main__':
