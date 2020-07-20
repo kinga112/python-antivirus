@@ -1,14 +1,9 @@
 from flask import Flask, render_template, request
+from flask_table import Table, Col
 import mysql.connector
 from ebtables import ebtables
 
 app = Flask(__name__)
-
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="admin"
-)
 
 @app.route('/') 
 def home():
@@ -20,13 +15,22 @@ def conf():
         dev_ip = request.form['ip']
         dev = request.form['devices']
         print('device ip: {}, device: {}'.format(dev_ip, dev))
+        # sql(dev_ip, dev)
 
     if request.method == 'Get':
         print("get")
-
+        # stuff = ['1', '2', 't', 'a']
+    
     return render_template('conf.html')
 
 def sql(dev_ip, dev):
+
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="admin"
+    )
+
     mycursor = mydb.cursor()
 
     sql = "INSERT INTO whitelist (dev_ip, dev) VALUES (%s, %s)"
