@@ -32,7 +32,7 @@ def add_sql(dev_ip, dev):
     mydb = mysql.connector.connect(
         host="localhost:3306",
         user="db",
-        password="password"
+        password="password",
         database='whitelist'
     )
 
