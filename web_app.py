@@ -38,7 +38,7 @@ def conf():
     return render_template('conf.html', len=len(dev_ip_list), dev_ip_list=dev_ip_list, dev_list=dev_list)
 
 def add_sql(dev_ip, dev):
-    mycursor = mydb.cursor()
+    mycursor = mydb.cursor(buffered=True)
 
     sql = "INSERT INTO whitelist (device_ip, device) VALUES (%s, %s)"
     val = (dev_ip, dev)
@@ -46,7 +46,7 @@ def add_sql(dev_ip, dev):
     mydb.commit()
 
 def get_sql():
-    mycursor = mydb.cursor()
+    mycursor = mydb.cursor(buffered=True)
 
     mycursor.execute("SELECT device_ip, device FROM whitelist")
     data = cursor.fetchall()
