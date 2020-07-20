@@ -50,8 +50,8 @@ def get_sql():
     dev_list = []
 
     for row in data:
-        dev_ip_list.append(row['device_ip'])
-        dev_list.append(row['device'])
+        dev_ip_list.append(row[0])
+        dev_list.append(row[0])
 
     print("DEVICE IP LIST: ", dev_ip_list)
     print("DEVICE LIST: ", dev_list)
