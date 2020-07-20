@@ -14,7 +14,7 @@ def conf():
         dev_ip = request.form['ip']
         dev = request.form['devices']
         print('device ip: {}, device: {}'.format(dev_ip, dev))
-        sql(dev_ip, dev)
+        add_sql(dev_ip, dev)
 
     if request.method == 'Get':
         print("get")
