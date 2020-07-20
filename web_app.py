@@ -4,6 +4,13 @@ from ebtables import ebtables
 
 app = Flask(__name__)
 
+mydb = mysql.connector.connect(
+        host="localhost",
+        user="db",
+        password="password",
+        database='whitelist'
+    )
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -13,7 +20,7 @@ def conf():
     if request.method == 'POST':
         dev_ip = request.form['ip']
         dev = request.form['devices']
-        print('device ip: {}, device: {}'.format(dev_ip, dev))
+        # print('device ip: {}, device: {}'.format(dev_ip, dev))
         add_sql(dev_ip, dev)
 
     if request.method == 'Get':
@@ -28,14 +35,6 @@ def conf():
     return render_template('conf.html', len=len(dev_ip_list), dev_ip_list=dev_ip_list, dev_list=dev_list)
 
 def add_sql(dev_ip, dev):
-
-    mydb = mysql.connector.connect(
-        host="localhost",
-        user="db",
-        password="password",
-        database='whitelist'
-    )
-
     mycursor = mydb.cursor()
 
     sql = "INSERT INTO whitelist (device_ip, device) VALUES (%s, %s)"
@@ -44,14 +43,6 @@ def add_sql(dev_ip, dev):
     mydb.commit()
 
 def get_sql():
-
-    mydb = mysql.connector.connect(
-        host="localhost",
-        user="db",
-        password="password",
-        database='whitelist'
-    )
-
     mycursor = mydb.cursor()
 
     mycursor.execute("SELECT device_ip, device FROM whitelist")
