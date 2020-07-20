@@ -68,7 +68,7 @@ img {
     max-width: 100%;
     height: auto;
 }
-  </style>
+</style>
 </head>
   <body>
       <div class="container">
@@ -92,9 +92,9 @@ img {
           <h2>Make Your Device Configurations Here</h2>
           <p>Make Sure You Click Apply To Save Your Changes!</p>
           <form action="/conf" method="POST" action="">
-            <label for="id">Device IP</label><br>
-            <input type="text" id="dev" name="dev"><br><br>
-            <label for="id">Choose Device Type:</label><br>
+            <label for="ip">Device IP</label><br>
+            <input type="text" id="ip" name="ip"><br><br>
+            <label for="devices">Choose Device Type:</label><br>
                 <select name="devices" id="devices">
                     <option value="amazon">Amazon Smart Devices</option>
                     <option value="google">Google Smart Devices</option>
@@ -102,7 +102,7 @@ img {
                     <option value="smart1">smart device 1</option>
                 </select>
             <br><br>
-            <input type="submit" value="Submit">  
+            <input type="submit" value="Submit">
         </form>
       <p>Please do one device at at time so we can successfully implement defensive mechanisms.</p>
         

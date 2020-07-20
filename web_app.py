@@ -1,27 +1,38 @@
 from flask import Flask, render_template, request
-
+import mysql.connector
 from ebtables import ebtables
 
 app = Flask(__name__)
 
-@app.route('/')
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="admin"
+)
+
+@app.route('/') 
 def home():
     return render_template('home.html')
 
 @app.route('/conf', methods=['POST', 'GET'])
 def conf():
     if request.method == 'POST':
-        src = request.form['src']
-        dev = request.form['dev']
-        conf_table(dev, src)
+        dev_ip = request.form['ip']
+        dev = request.form['devices']
+        print('device ip: {}, device: {}'.format(dev_ip, dev))
+
+    if request.method == 'Get':
+        print("get")
+
     return render_template('conf.html')
 
-@app.route('/add_conf', methods=['POST', 'GET'])
-def conf_add():
-    return render_template('conf_add.html')
+def sql(dev_ip, dev):
+    mycursor = mydb.cursor()
 
-def conf_table(device_ip, src_ip):
-    print("")
+    sql = "INSERT INTO whitelist (dev_ip, dev) VALUES (%s, %s)"
+    val = (dev_ip, dev)
+    mycursor.execute(sql, val)
+    mydb.commit()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
