@@ -45,7 +45,7 @@ def get_sql():
     mycursor = mydb.cursor(buffered=True)
 
     mycursor.execute("SELECT device_ip, device FROM whitelist")
-    data = cursor.fetchall()
+    data = mycursor.fetchall()
     dev_ip_list = []
     dev_list = []
 
