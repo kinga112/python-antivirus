@@ -8,7 +8,7 @@ mydb = mysql.connector.connect(
         host="localhost",
         user="db",
         password="password",
-        database='whitelist'
+        database="whitelist"
     )
 
 @app.route('/')
