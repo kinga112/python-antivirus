@@ -51,7 +51,7 @@ def get_sql():
 
     for row in data:
         dev_ip_list.append(row[0])
-        dev_list.append(row[0])
+        dev_list.append(row[1])
 
     print("DEVICE IP LIST: ", dev_ip_list)
     print("DEVICE LIST: ", dev_list)
