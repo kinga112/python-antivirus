@@ -60,6 +60,10 @@
   margin-left: 200px; /* Same as the width of the sidenav */
 }
 
+table, th, td {
+  border: 1px solid black;
+}
+
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
@@ -103,9 +107,26 @@ img {
                 </select>
             <br><br>
             <input type="submit" value="Submit">
-        </form>
-      <p>Please do one device at at time so we can successfully implement defensive mechanisms.</p>
-        
+          </form>
+
+          <p>Please do one device at at time so we can successfully implement defensive mechanisms.</p>
+          
+          <table style="width: 1000px;">
+            <td>Device</td>
+            <td>Device IP</td>
+            
+            {%for i in range(0, len)%}
+
+            <!-- table rows -->
+            <tr>
+              <td>{{ dev_ip_list[i] }}</td>
+              <td>{{ dev_list[i] }}</td>
+
+            {%endfor%}
+
+            </tr> 
+          </table>
+
         </div>
         </div>
     </body>
