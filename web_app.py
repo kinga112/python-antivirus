@@ -30,14 +30,15 @@ def conf():
 def add_sql(dev_ip, dev):
 
     mydb = mysql.connector.connect(
-        host="localhost",
+        host="localhost:3306",
         user="db",
         password="password"
+        database='whitelist'
     )
 
     mycursor = mydb.cursor()
 
-    sql = "INSERT INTO whitelist (dev_ip, dev) VALUES (%s, %s)"
+    sql = "INSERT INTO whitelist (device_ip, device) VALUES (%s, %s)"
     val = (dev_ip, dev)
     mycursor.execute(sql, val)
     mydb.commit()
