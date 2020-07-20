@@ -4,12 +4,15 @@ from ebtables import ebtables
 
 app = Flask(__name__)
 
-mydb = mysql.connector.connect(
-        host="localhost",
-        user="db",
-        password="password",
-        database='whitelist'
-    )
+try:
+    mydb = mysql.connector.connect(
+            host="localhost",
+            user="db",
+            password="password",
+            database="whitelist"
+        )
+except:
+    print("cant connect to mysql server")
 
 @app.route('/')
 def home():
