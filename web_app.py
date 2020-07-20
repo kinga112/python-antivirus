@@ -30,7 +30,7 @@ def conf():
 def add_sql(dev_ip, dev):
 
     mydb = mysql.connector.connect(
-        host="localhost:3306",
+        host="localhost",
         user="db",
         password="password",
         database='whitelist'
@@ -44,10 +44,21 @@ def add_sql(dev_ip, dev):
     mydb.commit()
 
 def get_sql():
-    cursor.execute("SELECT device_ip, device FROM whitelist")
+
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="db",
+        password="password",
+        database='whitelist'
+    )
+
+    mycursor = mydb.cursor()
+
+    mycursor.execute("SELECT device_ip, device FROM whitelist")
     data = cursor.fetchall()
     dev_ip_list = []
     dev_list = []
+
     for row in data:
         dev_ip_list.append(row['device_ip'])
         dev_list.append(row['device'])
