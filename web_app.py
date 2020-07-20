@@ -31,8 +31,8 @@ def add_sql(dev_ip, dev):
 
     mydb = mysql.connector.connect(
         host="localhost",
-        user="root",
-        password="admin"
+        user="db",
+        password="password"
     )
 
     mycursor = mydb.cursor()
