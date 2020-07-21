@@ -23,7 +23,7 @@ def home():
     return render_template('home.html')
 def help():
     return render_template('help.html')
-def faq():
+#def faq():
     return render_template('faq.html')
 def about():
     return render_template('about.html')
