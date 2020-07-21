@@ -5,12 +5,18 @@ from ebtables import ebtables
 app = Flask(__name__)
 
 # try:
+# mydb = mysql.connector.connect(
+#     host="localhost",
+#     user="root",
+#     password="password",
+#     database="whitelist",
+#     auth_plugin='mysql_native_password'
+# )
 mydb = mysql.connector.connect(
     host="localhost",
-    user="root",
+    user="db",
     password="password",
-    database="whitelist",
-    auth_plugin='mysql_native_password'
+    database="whitelist"
 )
 # except:
 #     print("cannot connect to MySQL Server")
