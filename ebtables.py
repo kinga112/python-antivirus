@@ -7,9 +7,9 @@ def add_rule(device_ip, dev):
         print("sudo ebtables -A FORWARD -p IPv4 --ip-src {} --ip-dst {} -j ACCEPT".format(device_ip, ip))
         try:
             subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-src",device_ip,"--ip-dst",ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
-            subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-src",ip,"--ip-dst",device_ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
-            subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-src",device_ip,"-j","DROP"], stfout=subprocess.PIPE)
-            subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-dst",device_ip,"-j","DROP"], stfout=subprocess.PIPE)
+            # subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-src",ip,"--ip-dst",device_ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
+            # subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-src",device_ip,"-j","DROP"], stfout=subprocess.PIPE)
+            # subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-dst",device_ip,"-j","DROP"], stfout=subprocess.PIPE)
             return 'Ebtables successfully (probably not) added new rules'
         except:
             return 'Error: Ebtables not updated'
