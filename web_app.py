@@ -4,7 +4,6 @@ from ebtables import ebtables
 
 app = Flask(__name__)
 
-# try:
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -18,8 +17,6 @@ mydb = mysql.connector.connect(
 #     password="password",
 #     database="whitelist"
 # )
-# except:
-#     print("cannot connect to MySQL Server")
 
 @app.route('/')
 def home():
@@ -49,19 +46,21 @@ def delete_conf(id):
     return redirect('/conf')
 
 def add_sql(dev_ip, dev):
+    error = ''
     stat = ebtables(dev_ip, dev)
-    print(stat)
     mycursor = mydb.cursor(buffered=True)
     sql = "INSERT INTO whitelist (device_ip, device) VALUES (%s, %s)"
     val = (dev_ip, dev)
     
     try:
         mycursor.execute(sql, val)
+        error = 'none'
     except mysql.connector.errors.IntegrityError as error:
         if 'Duplicate entry' in str(error):
             error = 'duplicate'
 
     mydb.commit()
+    return error
 
 def get_sql():
     mycursor = mydb.cursor(buffered=True)
