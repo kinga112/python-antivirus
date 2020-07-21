@@ -40,7 +40,7 @@ def delete_conf(id):
     return redirect('/conf')
 
 def add_sql(dev_ip, dev):
-    
+    stat = ebtables(dev_ip, dev)
     mycursor = mydb.cursor(buffered=True)
     sql = "INSERT INTO whitelist (device_ip, device) VALUES (%s, %s)"
     val = (dev_ip, dev)
