@@ -17,7 +17,7 @@ def add_rule(device_ip, dev):
 def delete_rule(device_ip, dev):
     f = open('devices/{}.txt'.format(dev), "r")
     for ip in f:
-        ip.rstrip('\n')
+        ip.rstrip('\r\n')
         try:
             subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-src",device_ip,"--ip-dst",ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
             subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-src",ip,"--ip-dst",device_ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
