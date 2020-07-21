@@ -1,19 +1,28 @@
-import os
+import subprocess
 
-def ebtables(device_ip, dev):
-    src_ip_list = get_src_ips(dev)
-    for ip in src_ip_list:
-        try:
-            os.system("sudo ebtables -A FORWARD -p IPv4 --ip-src {} --ip-dst {} -j ACCEPT".format(ip, dev_ip))
-            os.system("sudo ebtables -A FORWARD -p IPv4 --ip-src {} --ip-dst {} -j ACCEPT".format(dev_ip, ip))
-        except:
-            return("Blocking new IP failed")
-        return("Successfully blocked IP: {}".format(src_ip))
+def add_rule(device_ip, dev):
+    f = open('devices/{}.txt'.format(dev), "r")
+    try:
+        for ip in f:
+            ip = ip.replace('\n', '')
+            print("sudo ebtables -A FORWARD -p IPv4 --ip-src {} --ip-dst {} -j ACCEPT".format(device_ip, ip))
+            subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-src",device_ip,"--ip-dst",ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
+            subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-src",ip,"--ip-dst",device_ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
+        subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-src",device_ip,"-j","DROP"], stdout=subprocess.PIPE)
+        subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-dst",device_ip,"-j","DROP"], stdout=subprocess.PIPE)
+        return 'Ebtables successfully (probably not) added new rules'
+    except:
+        return 'Error: Ebtables not updated'
 
-def get_src_ips(dev):
-    src_ip_list = []
-    f = open('{}.txt'.format(dev), "r")
-    for ip in f:
-        src_ip_list.append(ip)
-    return src_ip_list
-    
+def delete_rule(device_ip, dev):
+    f = open('devices/{}.txt'.format(device_ip), "r")
+    try:
+        for ip in f:
+            ip = ip.replace('\n', '')
+            subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-src",dev,"--ip-dst",ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
+            subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-src",ip,"--ip-dst",dev,"-j","ACCEPT"], stdout=subprocess.PIPE)
+        subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-src",dev,"-j","DROP"], stdout=subprocess.PIPE)
+        subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-dst",dev,"-j","DROP"], stdout=subprocess.PIPE)
+        return 'Ebtables successfully (probably not) deleted rules'
+    except:
+        return 'Error: Ebtables not updated'
