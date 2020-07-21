@@ -4,19 +4,20 @@ from ebtables import add_rule, delete_rule
 
 app = Flask(__name__)
 
-# mydb = mysql.connector.connect(
-#     host="localhost",
-#     user="root",
-#     password="password",
-#     database="whitelist",
-#     auth_plugin='mysql_native_password'
-# )
 mydb = mysql.connector.connect(
     host="localhost",
-    user="db",
+    user="root",
     password="password",
-    database="whitelist"
+    database="whitelist",
+    auth_plugin='mysql_native_password'
 )
+
+# mydb = mysql.connector.connect(
+#     host="localhost",
+#     user="db",
+#     password="password",
+#     database="whitelist"
+# )
 
 @app.route('/')
 def home():
@@ -30,9 +31,6 @@ def conf():
         dev = request.form['devices']
         error = add_sql(dev_ip, dev)
         print("ERROR:", error)
-    
-    if request.method == 'Get':
-        print("get")
 
     dev_ip_list, dev_list = get_sql()
     
@@ -79,6 +77,7 @@ def get_sql():
 
 def del_sql(dev_ip, dev):
     stat = delete_rule(dev_ip, dev)
+    print(stat)
     mycursor = mydb.cursor()
     sql = "DELETE FROM whitelist where device_ip = '{}'".format(dev)
     mycursor.execute(sql)
