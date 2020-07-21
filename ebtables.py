@@ -9,7 +9,6 @@ def ebtables(device_ip, dev):
             subprocess.call("sudo ebtables -A FORWARD -p IPv4 --ip-src {} --ip-dst {} -j ACCEPT".format(device_ip, ip))
             subprocess.call("sudo ebtables -A FORWARD -p IPv4 --ip-src {} -j DROP".format(device_ip))
             subprocess.call("sudo ebtables -A FORWARD -p IPv4 --ip-dst {} -j DROP".format(device_ip))
-            return 'none'
+            return 'Ebtables Successfully (probably not) updated'
         except:
-            return 'error'
-    
+            return 'Error: Ebtables not updated'
