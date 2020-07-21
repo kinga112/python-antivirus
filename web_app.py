@@ -22,7 +22,7 @@ def home():
 def conf():
     if request.method == 'POST':
         dev_ip = request.form['ip']
-        dev = request.form['devs']
+        dev = request.form['devices']
         print('dev ip: {}, dev: {}'.format(dev_ip, dev))
         add_sql(dev_ip, dev)
     
