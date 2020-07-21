@@ -12,7 +12,7 @@ try:
             database="whitelist"
         )
 except:
-    print("cant connect to mysql server")
+    print("cannot connect to MySQL Server")
 
 @app.route('/')
 def home():
@@ -22,7 +22,7 @@ def home():
 def conf():
     if request.method == 'POST':
         dev_ip = request.form['ip']
-        dev = request.form['devs']
+        dev = request.form['devices']
         print('dev ip: {}, dev: {}'.format(dev_ip, dev))
         add_sql(dev_ip, dev)
     
@@ -60,8 +60,6 @@ def get_sql():
         dev_ip_list.append(row[0])
         dev_list.append(row[1])
 
-    # print("DEVICE IP LIST: ", dev_ip_list)
-    # print("DEVICE LIST: ", dev_list)
     return dev_ip_list, dev_list
 
 def del_sql(dev_ip, dev):
