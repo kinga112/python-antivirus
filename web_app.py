@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import mysql.connector
 from ebtables import ebtables
 
@@ -22,21 +22,31 @@ def home():
 def conf():
     if request.method == 'POST':
         dev_ip = request.form['ip']
-        dev = request.form['devices']
-        # print('device ip: {}, device: {}'.format(dev_ip, dev))
-        add_sql(dev_ip, dev)
-
+        dev = request.form['devs']
+        # print('dev ip: {}, dev: {}'.format(dev_ip, dev))
+        # add_sql(dev_ip, dev)
+        
+    dev_ip_list = ['123.123.123', '123.456.789', '123.123']
+    dev_list = ['google', 'amazon', 'google']
+    
     if request.method == 'Get':
         print("get")
 
-    dev_ip_list, dev_list = get_sql()
+    # dev_ip_list, dev_list = get_sql()
     
     return render_template('conf.html', len=len(dev_ip_list), dev_ip_list=dev_ip_list, dev_list=dev_list)
+
+@app.route('/conf/del/<id>', methods=['POST'])
+def delete_conf(id):
+    dev = id.split(',')[0]
+    dev_ip = id.split(',')[1]
+    del_sql(dev_ip, dev)
+    return redirect('/conf')
 
 def add_sql(dev_ip, dev):
     mycursor = mydb.cursor(buffered=True)
 
-    sql = "INSERT INTO whitelist (device_ip, device) VALUES (%s, %s)"
+    sql = "INSERT INTO whitelist (dev_ip, dev) VALUES (%s, %s)"
     val = (dev_ip, dev)
     mycursor.execute(sql, val)
     mydb.commit()
@@ -44,7 +54,7 @@ def add_sql(dev_ip, dev):
 def get_sql():
     mycursor = mydb.cursor(buffered=True)
 
-    mycursor.execute("SELECT device_ip, device FROM whitelist")
+    mycursor.execute("SELECT dev_ip, dev FROM whitelist")
     data = mycursor.fetchall()
     dev_ip_list = []
     dev_list = []
@@ -56,6 +66,12 @@ def get_sql():
     print("DEVICE IP LIST: ", dev_ip_list)
     print("DEVICE LIST: ", dev_list)
     return dev_ip_list, dev_list
+
+def del_sql(dev_ip, dev):
+    mycursor = mydb.cursor(buffered=True)
+    mycursor.execute("DELETE FROM whitelist WHERE device_ip = {}".format(dev_ip))
+    mycursor.execute("DELETE FROM whitelist WHERE device = {}".format(dev))
+    mydb.commit()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
