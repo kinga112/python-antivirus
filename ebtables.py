@@ -1,6 +1,6 @@
 import subprocess
 
-def add_rule(device_ip):
+def add_rule(device_ip, dev):
     f = open('devices/{}.txt'.format(dev), "r")
     for ip in f:
         ip.rstrip('\n')
@@ -13,7 +13,7 @@ def add_rule(device_ip):
         except:
             return 'Error: Ebtables not updated'
 
-def delete_rule(device_ip):
+def delete_rule(device_ip, dev):
     f = open('devices/{}.txt'.format(dev), "r")
     for ip in f:
         ip.rstrip('\n')
