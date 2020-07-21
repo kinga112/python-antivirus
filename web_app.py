@@ -23,16 +23,13 @@ def conf():
     if request.method == 'POST':
         dev_ip = request.form['ip']
         dev = request.form['devs']
-        # print('dev ip: {}, dev: {}'.format(dev_ip, dev))
-        # add_sql(dev_ip, dev)
-        
-    dev_ip_list = ['123.123.123', '123.456.789', '123.123']
-    dev_list = ['google', 'amazon', 'google']
+        print('dev ip: {}, dev: {}'.format(dev_ip, dev))
+        add_sql(dev_ip, dev)
     
     if request.method == 'Get':
         print("get")
 
-    # dev_ip_list, dev_list = get_sql()
+    dev_ip_list, dev_list = get_sql()
     
     return render_template('conf.html', len=len(dev_ip_list), dev_ip_list=dev_ip_list, dev_list=dev_list)
 
