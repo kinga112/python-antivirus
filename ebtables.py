@@ -19,10 +19,10 @@ def delete_rule(device_ip, dev):
     try:
         for ip in f:
             ip = ip.replace('\n', '')
-            subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-src",device_ip,"--ip-dst",ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
-            subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-src",ip,"--ip-dst",device_ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
-        subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-src",device_ip,"-j","DROP"], stdout=subprocess.PIPE)
-        subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-dst",device_ip,"-j","DROP"], stdout=subprocess.PIPE)
+            subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-src",dev,"--ip-dst",ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
+            subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-src",ip,"--ip-dst",dev,"-j","ACCEPT"], stdout=subprocess.PIPE)
+        subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-src",dev,"-j","DROP"], stdout=subprocess.PIPE)
+        subprocess.Popen(["sudo","ebtables","-D","FORWARD","-p","IPv4","--ip-dst",dev,"-j","DROP"], stdout=subprocess.PIPE)
         return 'Ebtables successfully (probably not) deleted rules'
     except:
         return 'Error: Ebtables not updated'
