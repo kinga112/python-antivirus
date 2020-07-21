@@ -4,6 +4,26 @@
     <title>Configuration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+  .alert {
+    padding: 20px;
+    width: 960px;
+    background-color: #f44336;
+    color: white;
+  }
+
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .closebtn:hover {
+    color: black;
+  }
   .tab {
     padding-left: 50px;
   }
@@ -136,8 +156,14 @@ img {
             <br><br>
             <input type="submit" value="Submit">
           </form>
-
+          
           <p>Please do one device at at time so we can successfully implement defensive mechanisms.</p>
+          {% if error == "duplicate" %}
+            <div class="alert">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+              <strong>ERROR!</strong> IP already added
+            </div>
+          {% endif %}
           
           <table style="width: 1000px;">
             <td>Device</td>

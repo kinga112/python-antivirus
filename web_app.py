@@ -1,23 +1,23 @@
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request, redirect, flash, send_file
 import mysql.connector
 from ebtables import add_rule, delete_rule
 
 app = Flask(__name__)
 
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="password",
-    database="whitelist",
-    auth_plugin='mysql_native_password'
-)
-
 # mydb = mysql.connector.connect(
 #     host="localhost",
-#     user="db",
+#     user="root",
 #     password="password",
-#     database="whitelist"
+#     database="whitelist",
+#     auth_plugin='mysql_native_password'
 # )
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="db",
+    password="password",
+    database="whitelist"
+)
 
 @app.route('/')
 def home():
@@ -34,6 +34,11 @@ def faq():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/setup')
+def setup():
+    with open('/templates/setup-converted.pdf', 'rb') as pdf:
+        return send_file(pdf, attachment_filename='setup-converted.pdf', mimetype='application/pdf')
 
 @app.route('/conf', methods=['POST', 'GET'])
 def conf():
@@ -65,12 +70,15 @@ def add_sql(dev_ip, dev):
     
     try:
         mycursor.execute(sql, val)
+        mydb.commit()
         error = 'none'
+        return error
     except mysql.connector.errors.IntegrityError as error:
         if 'Duplicate entry' in str(error):
             error = 'duplicate'
-
-    mydb.commit()
+            return error
+    
+    print("errror add:", error)
     return error
 
 def get_sql():
