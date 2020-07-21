@@ -60,14 +60,14 @@ def get_sql():
         dev_ip_list.append(row[0])
         dev_list.append(row[1])
 
-    print("DEVICE IP LIST: ", dev_ip_list)
-    print("DEVICE LIST: ", dev_list)
+    # print("DEVICE IP LIST: ", dev_ip_list)
+    # print("DEVICE LIST: ", dev_list)
     return dev_ip_list, dev_list
 
 def del_sql(dev_ip, dev):
     mycursor = mydb.cursor(buffered=True)
-    mycursor.execute("DELETE FROM whitelist WHERE device_ip = {}".format(dev_ip))
-    mycursor.execute("DELETE FROM whitelist WHERE device = {}".format(dev))
+    mycursor.execute("DELETE FROM device_ip WHERE device_ip = {}".format(dev_ip))
+    mycursor.execute("DELETE FROM device WHERE device = {}".format(dev))
     mydb.commit()
 
 if __name__ == '__main__':
