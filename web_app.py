@@ -6,11 +6,11 @@ app = Flask(__name__)
 
 try:
     mydb = mysql.connector.connect(
-            host="localhost",
-            user="db",
-            password="password",
-            database="whitelist"
-        )
+        host="localhost",
+        user="db",
+        password="password",
+        database="whitelist"
+    )
 except:
     print("cannot connect to MySQL Server")
 
@@ -23,7 +23,6 @@ def conf():
     if request.method == 'POST':
         dev_ip = request.form['ip']
         dev = request.form['devices']
-        print('dev ip: {}, dev: {}'.format(dev_ip, dev))
         add_sql(dev_ip, dev)
     
     if request.method == 'Get':
@@ -41,8 +40,8 @@ def delete_conf(id):
     return redirect('/conf')
 
 def add_sql(dev_ip, dev):
+    
     mycursor = mydb.cursor(buffered=True)
-
     sql = "INSERT INTO whitelist (device_ip, device) VALUES (%s, %s)"
     val = (dev_ip, dev)
     mycursor.execute(sql, val)
