@@ -30,4 +30,3 @@ def globalRules():
             range3 += 1
     except:
         return("setting global rules failed")
-    return("Successfully blocked IP: {}".format(src_ip))
