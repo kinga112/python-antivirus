@@ -1,19 +1,15 @@
 import os
 
 def ebtables(device_ip, dev):
-    src_ip_list = get_src_ips(dev)
-    for ip in src_ip_list:
-        try:
-            os.system("sudo ebtables -A FORWARD -p IPv4 --ip-src {} --ip-dst {} -j ACCEPT".format(ip, dev_ip))
-            os.system("sudo ebtables -A FORWARD -p IPv4 --ip-src {} --ip-dst {} -j ACCEPT".format(dev_ip, ip))
-        except:
-            return("Blocking new IP failed")
-        return("Successfully blocked IP: {}".format(src_ip))
-
-def get_src_ips(dev):
-    src_ip_list = []
-    f = open('{}.txt'.format(dev), "r")
+    f = open('devices/{}.txt'.format(dev), "r")
     for ip in f:
-        src_ip_list.append(ip)
-    return src_ip_list
+        ip.rstrip('\n')
+        try:
+            os.system("sudo ebtables -A FORWARD -p IPv4 --ip-src {} --ip-dst {} -j ACCEPT".format(ip, device_ip))
+            os.system("sudo ebtables -A FORWARD -p IPv4 --ip-src {} --ip-dst {} -j ACCEPT".format(device_ip, ip))
+            os.system("sudo ebtables -A FORWARD -p IPv4 --ip-src {} -j DROP".format(device_ip))
+            os.system("sudo ebtables -A FORWARD -p IPv4 --ip-dst {} -j DROP".format(device_ip))
+            print("Successfully addded rules for Device: {}".format(device_ip))
+        except:
+            print("Adding rules for new device failed")
     
