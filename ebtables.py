@@ -4,7 +4,7 @@ def add_rule(device_ip, dev):
     f = open('devices/{}.txt'.format(dev), "r")
     try:
         for ip in f:
-            ip.rstrip('\n')
+            ip = ip.replace('\n', '')
             print("sudo ebtables -A FORWARD -p IPv4 --ip-src {} --ip-dst {} -j ACCEPT".format(device_ip, ip))
             subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-src",device_ip,"--ip-dst",ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
             subprocess.Popen(["sudo","ebtables","-A","FORWARD","-p","IPv4","--ip-src",ip,"--ip-dst",device_ip,"-j","ACCEPT"], stdout=subprocess.PIPE)
