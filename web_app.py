@@ -66,9 +66,9 @@ def del_sql(dev_ip, dev):
     mycursor = mydb.cursor(buffered=True)
     # mycursor.execute("DELETE FROM whitelist WHERE device_ip in ('{}')".format(dev_ip))
     # mycursor.execute("DELETE FROM whitelist WHERE device = '{}'".format(dev))
-    sql = "DELETE FROM whitelist WHERE device_ip = %s"
-    adr = (dev_ip, )
-    mycursor.execute(sql, adr)
+    sql = "DELETE FROM whitelist (device_ip, device) VALUES (%s, %s)"
+    val = (dev_ip, dev)
+    mycursor.execute(sql, val)
     print(mycursor.rowcount, "record(s) deleted")
     mydb.commit()
 
