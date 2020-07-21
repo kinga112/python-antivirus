@@ -43,7 +43,7 @@ def delete_conf(id):
 def add_sql(dev_ip, dev):
     mycursor = mydb.cursor(buffered=True)
 
-    sql = "INSERT INTO whitelist (dev_ip, dev) VALUES (%s, %s)"
+    sql = "INSERT INTO whitelist (device_ip, device) VALUES (%s, %s)"
     val = (dev_ip, dev)
     mycursor.execute(sql, val)
     mydb.commit()
@@ -51,7 +51,7 @@ def add_sql(dev_ip, dev):
 def get_sql():
     mycursor = mydb.cursor(buffered=True)
 
-    mycursor.execute("SELECT dev_ip, dev FROM whitelist")
+    mycursor.execute("SELECT device_ip, device FROM whitelist")
     data = mycursor.fetchall()
     dev_ip_list = []
     dev_list = []
