@@ -48,6 +48,7 @@ def delete_conf(id):
 def add_sql(dev_ip, dev):
     error = ''
     stat = add_rule(dev_ip, dev)
+    print(stat)
     mycursor = mydb.cursor(buffered=True)
     sql = "INSERT INTO whitelist (device_ip, device) VALUES (%s, %s)"
     val = (dev_ip, dev)
