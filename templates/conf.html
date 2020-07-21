@@ -4,6 +4,23 @@
     <title>Configuration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+  .tab {
+    padding-left: 50px;
+  }
+
+  .button {
+    background-color: #f44336; 
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
   body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -64,6 +81,10 @@ table, th, td {
   border: 1px solid black;
 }
 
+invis_border {
+  border: 1px solid white;
+}
+
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
@@ -100,10 +121,17 @@ img {
             <input type="text" id="ip" name="ip"><br><br>
             <label for="devices">Choose Device Type:</label><br>
                 <select name="devices" id="devices">
-                    <option value="amazon">Amazon Smart Devices</option>
-                    <option value="google">Google Smart Devices</option>
-                    <option value="roku">Roku Home Devices</option>
-                    <option value="smart1">smart device 1</option>
+                    <option value="amazon">Amazon Echo</option>
+                    <option value="google">Google Home</option>
+                    <option value="roku">Roku</option>
+                    <option value="aria">Aria Health Care Devices</option>
+                    <option value="hue">Philips Hue Lights</option>
+                    <option value="home">HomeMatic</option>
+                    <option value="Lightify">Lightify Smart Lighting</option>
+                    <option value="d_link">D-Link Smart Devices</option>
+                    <option value="tp_plug">TP-LinkPlug HS100/110</option>
+                    <option value="withing">Withings Smart Scale</option>
+                    <option value="wemo">WeMo Smart Switch</option>
                 </select>
             <br><br>
             <input type="submit" value="Submit">
@@ -114,13 +142,17 @@ img {
           <table style="width: 1000px;">
             <td>Device</td>
             <td>Device IP</td>
-            
+            <td>Remove</td>
             {%for i in range(0, len)%}
 
             <!-- table rows -->
             <tr>
               <td>{{ dev_list[i] }}</td>
-              <td>{{ dev_ip_list[i]}}</td>
+              <td>{{ dev_ip_list[i] }}</td>
+              <form method="post" action="/conf/del/{{ dev_ip_list[i] }},{{ dev_list[i] }}">
+                <td><button class="button" type="submit" name="delete" id="delete">Delete</button></td>
+              </form>
+              
 
             {%endfor%}
 
