@@ -1,5 +1,7 @@
 import time
 import psutil
+import datetime
+
 
 def main():
     old_value = 0
@@ -14,10 +16,17 @@ def main():
         
         time.sleep(1)
         
-def convert_to_gbit(value):
-    return value/1024./1024./1024.*8
+def convert_to_gbit(value): #returns MB
+    return value/1024./1024.*8
 
 def send_stat(value):
-    return "%0.3f" % convert_to_gbit(value)
+    for i in range(0,100):
+        time.sleep(0)
+        now = datetime.datetime.now()
+    return ((now.second), "%0.3f" % convert_to_gbit(value))
+
+f = open('results.txt', 'a')
+f.write(str() + '\n')
+f.close()
     
 main()
