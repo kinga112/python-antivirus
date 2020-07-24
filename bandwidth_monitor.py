@@ -1,6 +1,8 @@
 import time
 import psutil
 import datetime
+import sys
+from time import gmtime, strftime
 
 
 def main():
@@ -22,11 +24,8 @@ def convert_to_gbit(value): #returns MB
 def send_stat(value):
     for i in range(0,100):
         time.sleep(0)
-        now = datetime.datetime.now()
-    return ((now.second), "%0.3f" % convert_to_gbit(value))
+    f = open('results.txt', 'w', 'a')
+    print ((strftime("%H:%M:%S", gmtime())),"%0.3f" % convert_to_gbit(value), file=f, sep=',')
 
-f = open('results.txt', 'a')
-f.write(str() + '\n')
-f.close()
-    
+
 main()
