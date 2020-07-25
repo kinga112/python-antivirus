@@ -23,6 +23,10 @@ mydb = mysql.connector.connect(
 def home():
     return render_template('home.html')
 
+@app.route('/updategraph')
+def updategraph():
+    return render_template('home.html')
+
 @app.route('/help')
 def help():
     return render_template('help.html')

@@ -1,29 +1,36 @@
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+import matplotlib.dates as mdates
+import datetime
 import numpy as np
-from matplotlib import style
-import itertools
+import sys
+input=sys.argv[1]
+print(input)
 
-style.use('fivethirtyeight')
+Datum = [ line.strip('\n').split(",") for line in open('results.txt')][1:]
+Time = [ datetime.datetime.strptime(line[0],"%H:%M:%S") for line in Datum ]
+Time1 = [ mdates.date2num(line) for line in Time ]
+Byte = [ float(line[1]) for line in Datum ]
 
-fig = plt.figure()
-ax1 = fig.add_subplot(1,1,1)
+order = np.argsort(Time1)
+xs = np.array(Time1)
+ys = np.array(Byte)
 
-def animate(i):
-    graph_data = open('results.txt', 'r').read()
-    lines = graph_data.split('\n')
-    xs = []
-    ys = []
-    for line in lines:
-        if line:
-            pos = line.split(",")
-            if len(pos) > 1:
-                xs.append(pos[0])
-                ys.append(pos[1])
-    ax1.clear()
-    ax1.plot(np.sort(xs), np.sort(ys))
+fig, ax = plt.subplots()
 
+ax.set_title('data')
+ax.set_xlabel('Time')
+ax.set_ylabel('bytes')
+ax.plot_date(xs, ys, 'k-')
 
-ani = animation.FuncAnimation(fig, animate, interval=1000)
-plt.ylim((0,10))
+hfmt = mdates.DateFormatter('%H:%M:%S')
+ax.xaxis.set_major_formatter(hfmt)
+plt.gcf().autofmt_xdate()
+
 plt.show()
+
+
+
+
+
+    
+    

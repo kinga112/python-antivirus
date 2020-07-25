@@ -24,7 +24,7 @@ def convert_to_gbit(value): #returns MB
 def send_stat(value):
     for i in range(0,100):
         time.sleep(0)
-    f = open('results.txt', 'w', 'a')
+    f = open('results.txt', 'a')
     print ((strftime("%H:%M:%S", gmtime())),"%0.3f" % convert_to_gbit(value), file=f, sep=',')
 
 
