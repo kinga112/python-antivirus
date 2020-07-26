@@ -9,6 +9,7 @@
   body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
+    margin-left: 200px;
   }
   .topnav {
     overflow: hidden;
@@ -21,6 +22,7 @@
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
+    
   }
   .topnav a:hover {
     float: left;
@@ -41,6 +43,52 @@
     max-height: auto;
     
   }
+  .container1 {
+    width: 200px;
+    height: 100px;
+    background-color: #cfc;
+    padding: 10px;
+    border: 1px solid green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .text-block {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: black;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+.sidenav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+  @media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+  }
   </style>
   </head>
   <body>
@@ -52,16 +100,31 @@
           <a href="/help">Help</a>
           <a href="/about">About</a>
           </div>
+        <div class="sidenav">
+            <div id="logo">
+                <img src="{{url_for('static', filename='logo.PNG')}}" alt="IoT Mask Logo - Earth Covered By Mask">
+            </div>
+            <a href="a">Reboot - COMING SOON</a>
+            <a href="/conf">Settings</a>
+        </div>
         <div style="padding-left:16px">
           <h2> Raspberry Pi IoT Network Defender</h2>
           <p>Graphical representation test</p>
-        <div class="packets">
-	<img src="../static/packets{{ id }}.png" />
-	</div>
-	<div clas="bandwidth">
-	<img src="../static/bandwidth{{ id }}.png">
-	PCNT: {{ pcnt }}
-        </div>
+    <div class="container1">
+      PCNT: {{ pcnt }}
+      <div class="text-block">
+      Total Frames Passed 
+      </div>
     </div>
+    <div class="packets">
+	    <img src="../static/packets{{ id }}.png" />
+	  </div>
+	  <div class="bandwidth">
+      <img src="../static/bandwidth{{ id }}.png">
+    </div>
+    </div>
+    </div>
+  </div>
+  </div>
   </body>
 </html>
