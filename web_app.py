@@ -1,6 +1,14 @@
 from flask import Flask, render_template, request, redirect, flash, send_file
 import mysql.connector
 from ebtables import add_rule, delete_rule
+from packetgraph import packet_graph
+from updategraph import update_graph
+import threading
+from random import randint
+import time
+import subprocess
+import re
+import os
 
 app = Flask(__name__)
 
@@ -21,11 +29,12 @@ mydb = mysql.connector.connect(
 
 @app.route('/')
 def home():
-    return render_template('home.html')
-
-@app.route('/updategraph')
-def updategraph():
-    return render_template('home.html')
+    id = randint(100000, 999999)
+    packet_graph(id)
+    update_graph(id)
+    # time.sleep(2)
+    pcnt = ebtables_count()
+    return render_template('home.html', id=id, pcnt=pcnt)
 
 @app.route('/help')
 def help():
@@ -46,6 +55,7 @@ def setup():
 
 @app.route('/conf', methods=['POST', 'GET'])
 def conf():
+    del_pics()
     error = ''
     if request.method == 'POST':
         dev_ip = request.form['ip']
@@ -107,5 +117,26 @@ def del_sql(dev_ip, dev):
     mycursor.execute(sql)
     mydb.commit()
 
+def ebtables_count():
+	string = subprocess.check_output(['sudo', 'ebtables', '-L', '--Lc'])
+	pcnt = re.findall(b' pcnt = (.*?)\ -- ', string)
+	# bcnt = re.findall(r' bcnt = (.*?)\-p ', string)
+	count = 0
+	for num in pcnt:
+		count += int(num)
+	return count
+
+def del_pics():
+	print("deleting\n\n")
+	folder_path = 'static/'
+	folder = os.listdir(folder_path)
+	for images in folder:
+		if images.__contains__("bandwidth") or images.__contains__("packet"):
+			os.remove(os.path.join(folder_path, images))
+	timer = threading.Timer(30, del_pics)
+	timer.setDaemon(True)
+	timer.start()
+	
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(host='0.0.0.0', debug=True, port=5001)

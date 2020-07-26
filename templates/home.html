@@ -34,9 +34,17 @@
     background-color: #4CAF50;
     color: white;
   }
+  .packets {
+    width: auto;
+    height: auto;
+    max-width: auto;
+    max-height: auto;
+    
+  }
   </style>
   </head>
   <body>
+    <meta http-equiv="refresh" content="5">
     <div class="container">
         <div class ="topnav">
           <a class="active" href="/e">Home</a>
@@ -47,30 +55,13 @@
         <div style="padding-left:16px">
           <h2> Raspberry Pi IoT Network Defender</h2>
           <p>Graphical representation test</p>
-    <div class="wrapper">
-        <div id="chart"></div>
-          <script>
-            function getData() {
-                return Math.random();
-            }  
-            Plotly.plot('chart',[{
-                y:[getData()],
-                type:'line'
-            }]);
-            
-            var cnt = 0;
-            setInterval(function(){
-                Plotly.extendTraces('chart',{ y:[[getData()]]}, [0]);
-                cnt++;
-                if(cnt > 500) {
-                    Plotly.relayout('chart',{
-                        xaxis: {
-                            range: [cnt-500,cnt]
-                        }
-                    });
-                }
-            },15);
-          </script>
+        <div class="packets">
+	<img src="../static/packets{{ id }}.png" />
+	</div>
+	<div clas="bandwidth">
+	<img src="../static/bandwidth{{ id }}.png">
+	PCNT: {{ pcnt }}
+        </div>
     </div>
   </body>
 </html>
