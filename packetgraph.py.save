@@ -1,0 +1,20 @@
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import datetime
+import numpy as np
+
+def packet_graph(id):
+	Datum = [ line.strip('\n').split(",") for line in open('sniff_logger_py.txt')][1:]
+	Time = [ datetime.datetime.strptime(line[0],"%H:%M:%S") for line in Datum ]
+	Time1 = [ mdates.date2num(line) for line in Time ]
+	Byte = [ float(line[1]) for line in Datum ]
+
+	order = np.argsort(Time1)
+	xs = np.array(Time1)
+	<img src="image.png?v=<?php echo filemtime("image.png"); ?>" />
+
+hfmt = mdates.DateFormatter('%H:%M:%S')
+ax.xaxis.set_major_formatter(hfmt)
+plt.gcf().autofmt_xdate()
+
+plt.savefig('static/packets.png')
